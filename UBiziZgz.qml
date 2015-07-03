@@ -43,10 +43,4 @@ MainView {
 
     MainPage {
     }
-
-    ApiKeys {
-        id: apiKeys
-        here_app_id: "your here app id"
-        here_token: "your here token"
-    }
 }
