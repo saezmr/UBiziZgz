@@ -1,0 +1,17 @@
+{
+    "name": "ubizizgz.rikidpr",
+    "description": "description of UBiziZgz",
+    "architecture": "all",
+    "title": "UBiziZgz",
+    "hooks": {
+        "UBiziZgz": {
+            "apparmor": "UBiziZgz.apparmor",
+            "desktop":  "UBiziZgz.desktop"
+        }
+    },
+    "version": "0.1",
+    "maintainer": "rikidpr <rikerdpr@yahoo.es>",
+    "framework" : "ubuntu-sdk-15.04"
+}
+
+
