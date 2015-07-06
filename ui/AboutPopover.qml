@@ -18,11 +18,17 @@ Component {
             }
 
             ListItem.Header {
-                text: "DublinWheels\tv" + version
+                text: "UBiziZgz\tv" + version
             }
 
             ListItem.Standard {
-                text: "Written by Aaron Hastings (thecosmicfrog)"
+                text: "Written by anDprSoft"
+
+                onClicked: Qt.openUrlExternally("https://github.com/rikidpr/UBiziZgz")
+            }
+
+            ListItem.Standard {
+                text: "Based on DublinWheels by Aaron Hastings (thecosmicfrog)"
 
                 onClicked: Qt.openUrlExternally("https://github.com/thecosmicfrog")
             }
@@ -33,9 +39,9 @@ Component {
 
             ListItem.Standard {
                 text: "Source code, bugs and feature requests:<br>
-                       <a href=\"https://github.com/thecosmicfrog/DublinWheels\">github.com/thecosmicfrog/DublinWheels</a>"
+                       <a href=\"https://github.com/rikidpr/UBiziZgz\">github.com/rikidpr/UBiziZgz</a>"
 
-                onClicked: Qt.openUrlExternally("https://github.com/thecosmicfrog/DublinWheels")
+                onClicked: Qt.openUrlExternally("https://github.com/rikidpr/UBiziZgz")
             }
 
             ListItem.SingleControl {

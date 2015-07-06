@@ -12,16 +12,18 @@ WorkerScript.onMessage = function(sentMessage) {
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
             msg = xmlHttp.responseText;
-
+            //console.log("Respuesta: "+msg);
             // Parse response text to usable object.
             parsedMsg = JSON.parse(msg);
-
+            //console.log("parseado -> :"+parsedMsg);
             if (typeof parsedMsg != "undefined") {
-                for (var i = 0; i < parsedMsg.length; i++) {
-                    stations.push(parsedMsg[i]);
+                //console.log("bien parseado");
+                for (var i = 0; i < parsedMsg.result.length; i++) {
+                    //console.log("puss station:"+parsedMsg.result[i]);
+                    stations.push(parsedMsg.result[i]);
                 }
-
                 stations.sort(compare);
+                //console.log("estaciones ordenadas:"+stations);
                 WorkerScript.sendMessage({'stations': stations});
             }
         }
@@ -29,6 +31,7 @@ WorkerScript.onMessage = function(sentMessage) {
 }
 
 function compare(a, b) {
+    //console.log(a.title+"-"+b.title);
     if (a.title < b.title)
         return -1;
     if (a.title > b.title)

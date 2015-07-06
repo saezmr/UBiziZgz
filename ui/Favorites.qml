@@ -1,32 +1,14 @@
 import QtQuick 2.0
-import "../ubuntuComponents"
+import Ubuntu.Components 1.1
 
-Item{
-    id:itemFavorites
-    anchors.fill: parent
+Page{
+    id:favoritesPage
+    title: i18n.tr("UBiziZgz Favoritos")
 
     property color green1: "#558855";
     property color green2: "#228822";
     property color grey: "lightgrey";
 
-    WorkerScript {
-        id: favoriteQueryBikesWorker
-        source: "../js/getbikes.js"
-
-        onMessage: {
-            //TODO aqui hay que cambiar nombres y poner que navegue a el mapa pasando la info buena
-            bikesAvailableLabel.font.pointSize = 28;
-            bikesAvailableLabel.text = "<b>" + messageObject.stationInfo.available_bikes + "</b><br>Bikes";
-
-            spotsAvailableLabel.font.pointSize = 28;
-            spotsAvailableLabel.text = "<b>" + messageObject.stationInfo.available_bike_stands + "</b><br>Spots";
-
-            map.center = QtPositioning.coordinate(messageObject.stationInfo.position.lat, messageObject.stationInfo.position.lng)
-            map.zoomLevel = 16
-
-            activityIndicator.running = false
-        }
-    }
 
     ListModel{
         id:favoritesModel
@@ -52,7 +34,7 @@ Item{
         id: favoriteDelegate
         Item{
             width: favoritesList.width
-            height: 20
+            height: 40
             Rectangle {
                 id: background
                 x: 1; y: 1; width: parent.width - x*1; height: parent.height - y*1
@@ -75,8 +57,8 @@ Item{
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    activityIndicator.running = true
-                    favoriteQueryBikesWorker.sendMessage({'stationId': stationId})
+                    setFavorite(stationId)
+                    pageStack.pop();//push(Qt.resolvedUrl("MainPage.qml"), {"bikesAvailableColor": "#FF0000"})
                 }
             }
         }
@@ -103,5 +85,10 @@ Item{
         GradientStop { position: 0.0; color: green1}
         GradientStop { position: 0.66; color: green2}
     }
+
+
+//    StackView {
+//        id: pageStack
+//    }
 }
 

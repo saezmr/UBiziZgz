@@ -7,7 +7,7 @@ MainView {
     id: mainView
 
     applicationName: "andpr.bizizgz"
-    property string version: "0.13"
+    property string version: "0.1"
 
     useDeprecatedToolbar: false
 
@@ -16,16 +16,31 @@ MainView {
     width: units.gu(45)
     height: units.gu(78)
 
-    function getLastStationIndex(lastStation, stationsModel) {
+    function getStationIndex(stationId, stationsModel) {
         for (var i = 0; i < stationsModel.count; i++) {
-            if (lastStation === stationsModel.get(i).name)
+            if (stationId === stationsModel.get(i).id)
                 return i;
         }
 
         return 0;
     }
 
-    // U1DB backend to record the last-picked station. Makes it faster for users to get information for their usual station.
+    function setFavorite(stationId){
+        console.log("favorito seleccionado:"+stationId);
+        mainPage.preSelectedStationId= stationId;
+        mainPage.lanzarTema(stationId)
+    }
+
+
+    PageStack {
+        id: pageStack
+        Component.onCompleted: push(mainPage)
+        MainPage {
+            id:mainPage
+        }
+    }
+
+/*    // U1DB backend to record the last-picked station. Makes it faster for users to get information for their usual station.
     U1db.Database {
         id: db;
         path: "bizizgz.u1db"
@@ -40,7 +55,5 @@ MainView {
            stationName: ""
        }
     }
-
-    MainPage {
-    }
+*/
 }

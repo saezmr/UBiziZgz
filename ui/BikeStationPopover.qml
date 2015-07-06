@@ -18,22 +18,22 @@ Component {
             }
 
             ListItem.Header {
-                text: name
+                text: title
             }
 
             ListItem.Standard {
-                text: bikes + " bikes available"
+                text: bicisDisponibles + " bizis disponibles"
             }
 
             ListItem.Standard {
-                text: free + " free spots available"
+                text: anclajesDisponibles + " anclajes disponibles"
             }
 
             ListItem.SingleControl {
                 highlightWhenPressed: false
 
                 control: Button {
-                    text: "Close"
+                    text: "Cerrar"
                     onClicked: PopupUtils.close(stationPopover)
                 }
             }

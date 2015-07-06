@@ -4,15 +4,26 @@ import Ubuntu.Components.Popups 1.0
 import QtLocation 5.0
 import QtPositioning 5.2
 import QtQuick.XmlListModel 2.0
+import "../js/ApiKeys.js" as ApiKeys
+import "../js/CoordinatesUtil.js" as CoordUtil
 
 Page {
     id: mainPage
 
     title: i18n.tr("UBiziZgz")
 
+    property color bikesAvailableColor: "#7dc242"
+    property int preSelectedStationId:101
+
     // Always begin by loading the selected stop.
     Component.onCompleted: {
-        queryStationsWorker.sendMessage({"station": stationsModel.get(stationSelector.selectedIndex).name})
+        queryStationsWorker.sendMessage({"stationId": preSelectedStationId})
+    }
+
+    function lanzarTema (stationId){
+        console.log("tema "+stationId);
+        //queryStationsWorker.sendMessage({"stationId": stationId})
+        stationSelector.selectedIndex = getStationIndex(stationId, stationsModel)
     }
 
     WorkerScript {
@@ -21,13 +32,14 @@ Page {
 
         onMessage: {
             bikesAvailableLabel.font.pointSize = 28;
-            bikesAvailableLabel.text = "<b>" + messageObject.stationInfo.available_bikes + "</b><br>Bikes";
+            bikesAvailableLabel.text = "<b>" + messageObject.stationInfo.bicisDisponibles + "</b><br>Bikes";
 
             spotsAvailableLabel.font.pointSize = 28;
-            spotsAvailableLabel.text = "<b>" + messageObject.stationInfo.available_bike_stands + "</b><br>Spots";
-
-            map.center = QtPositioning.coordinate(messageObject.stationInfo.position.lat, messageObject.stationInfo.position.lng)
+            spotsAvailableLabel.text = "<b>" + messageObject.stationInfo.anclajesDisponibles + "</b><br>Spots";
+            var coordenadas = CoordUtil.transformarCoordenadas(messageObject.stationInfo.geometry.coordinates);
+            console.log("epei");
             map.zoomLevel = 16
+            map.center = QtPositioning.coordinate(coordenadas[0], coordenadas[1])
 
             activityIndicator.running = false
         }
@@ -39,10 +51,9 @@ Page {
 
         onMessage: {
             for (var i = 0; i < messageObject.stations.length; i++) {
-                stationsModel.append({ "name": messageObject.stations[i].title, "description": "" })
+                stationsModel.append({ "id": messageObject.stations[i].id, "name": messageObject.stations[i].title, "description": "" })
             }
-
-            stationSelector.selectedIndex = getLastStationIndex(lastStation.contents.id, stationsModel)
+            stationSelector.selectedIndex = getStationIndex(preSelectedStationId, stationsModel)
         }
     }
 
@@ -55,7 +66,17 @@ Page {
 
             onTriggered: {
                 activityIndicator.running = true
-                queryBikesWorker.sendMessage({"station": stationsModel.get(stationSelector.selectedIndex).name})
+                queryBikesWorker.sendMessage({"stationId": stationsModel.get(stationSelector.selectedIndex).id})
+            }
+        },
+        Action {
+            id: favoritesAction
+
+            iconName: "favorite-unselected"
+            text: "Favoritos"
+
+            onTriggered: {
+                pageStack.push(Qt.resolvedUrl("Favorites.qml"))
             }
         },
         Action {
@@ -126,10 +147,10 @@ Page {
 
             onSelectedIndexChanged: {
                 activityIndicator.running = true
-                queryBikesWorker.sendMessage({'station': stationsModel.get(stationSelector.selectedIndex).name})
+                queryBikesWorker.sendMessage({'stationId': stationsModel.get(stationSelector.selectedIndex).id})
 
                 // Save station to U1DB backend for faster access on next app start.
-                lastStation.contents = {id: stationsModel.get(stationSelector.selectedIndex).id}
+                //lastStation.contents = {id: stationsModel.get(stationSelector.selectedIndex).id}
             }
         }
 
@@ -159,7 +180,7 @@ Page {
             width: parent.width / 2
             height: units.gu(13)
             radius: "medium"
-            color: "#7dc242"
+            color: bikesAvailableColor
 
             Label {
                 id: bikesAvailableLabel
@@ -206,9 +227,8 @@ Page {
             anchors {
                 fill: parent
             }
-
-            center: QtPositioning.coordinate(53.351, -6.260)
-            zoomLevel: 15
+            center: QtPositioning.coordinate(41.65183,-0.88113)
+            zoomLevel: 16
 
             plugin: Plugin {
                 id: plugin
@@ -218,15 +238,15 @@ Page {
                 required.geocoding: Plugin.AnyGeocodingFeatures
 
                 parameters: [
-                    PluginParameter { name: "app_id"; value: apiKeys.here_app_id },
-                    PluginParameter { name: "token"; value: apiKeys.here_token }
+                    PluginParameter { name: "app_id"; value: ApiKeys.here_app_id },
+                    PluginParameter { name: "token"; value: ApiKeys.here_token }
                 ]
             }
 
             XmlListModel {
                 id: bikeStationModel
 
-                source: "www.zaragoza.es/api/recurso/urbanismo-infraestructuras/estacion-bicicleta.xml?start=0&rows=130"
+                source: "http://www.zaragoza.es/api/recurso/urbanismo-infraestructuras/estacion-bicicleta.xml?start=0&rows=130"
                 query: "/resultado/result/estacion"
 
                 XmlRole { name: "id";  query: "id/string()";  isKey: true }
@@ -242,7 +262,7 @@ Page {
                 model: bikeStationModel
                 delegate: MapQuickItem {
                     id: poiItem
-                    coordinate: QtPositioning.coordinate(coordinates)//aqui habria que pasar lat, long
+                    coordinate: QtPositioning.coordinate(CoordUtil.getLat(coordinates), CoordUtil.getLong(coordinates))//aqui habria que pasar lat, long
 
                     anchorPoint.x: poiImage.width * 0.5
                     anchorPoint.y: poiImage.height
@@ -259,7 +279,7 @@ Page {
 
                             onClicked: {
                                 PopupUtils.open(bikeStationPopover)
-                                stationSelector.selectedIndex = getLastStationIndex(id, stationsModel)
+                                stationSelector.selectedIndex = getStationIndex(id, stationsModel)
                             }
                         }
 

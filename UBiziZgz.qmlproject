@@ -34,15 +34,11 @@ Project {
         filter: "*"
     }
     Files {
-        directory: "www/img/"
+        directory: "img/"
         filter: "*"
     }
     Files {
-        directory: "www/css/"
-        filter: "*"
-    }
-    Files {
-        directory: "www/js/"
+        directory: "js/"
         filter: "*"
     }
     Files {

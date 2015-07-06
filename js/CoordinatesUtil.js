@@ -12,6 +12,44 @@ var sm_EccSquared = 6.69437999013e-03;
 
 var UTMScaleFactor = 0.9996;
 
+//transformamos las coordenadas UTM del servicio a GEO (WGS84) que usa HereMaps
+//TODO error: estamos teniendo un defecto de precision de unos metros al noreste
+function transformarCoordenadas(coordinates){
+    //console.log("params:"+ coordinates);
+    var cX, cY;
+    if (typeof coordinates === 'string'){
+        var split = coordinates.split(',');
+        cX = split[0];
+        cY = split[1];
+    } else {
+        cX = coordinates[0];
+        cY = coordinates[1];
+    }
+
+    //console.log("cX:"+cX);
+    //console.log("cY:"+cY);
+    var zoneZgz = 30;//ZONE UTM ZARAGOZA
+    var hemisferio = 'N';
+    var geoCord = getGeoCoordinatesFromUtm(cX, cY, zoneZgz,hemisferio);
+    //console.log(geoCord[0]+","+geoCord[1]);
+    return geoCord;
+}
+
+function getLat(coordinates){
+    var latlon = transformarCoordenadas(coordinates);
+    //console.log("latlon:"+ latlon);
+    var lat = latlon[0];
+    //console.log("lat="+lat);
+    return lat;
+}
+
+function getLong(coordinates){
+    var latlon = transformarCoordenadas(coordinates);
+    //console.log("latlon:"+ latlon);
+    var long = latlon[1];
+    //console.log("long:"+long);
+    return long;
+}
 
 /*
 * degToRad
