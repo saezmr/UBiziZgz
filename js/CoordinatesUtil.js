@@ -12,6 +12,42 @@ var sm_EccSquared = 6.69437999013e-03;
 
 var UTMScaleFactor = 0.9996;
 
+//estos del ayto zgz son unos cachondos y nos devuelven long, lat, al reves que como lo pide qtpositioning
+function getLanLon(coordinates){
+	var lat, lon;	
+	if (typeof coordinates === 'string'){
+		var split = coordinates.split(',');
+		lat = split[1];
+		lon = split[0];
+	} else {
+		lat = coordinates[1];
+		lon = coordinates[0];
+	}
+	var latlon = new Array(2);
+	latlon[0] = lat;
+	latlon[1] = lon;
+	return latlon;
+}
+
+
+function getLat(coordinates){
+    var latlon = getLanLon(coordinates);
+    //console.log("latlon:"+ latlon);
+    var lat = latlon[0];
+    //console.log("lat="+lat);
+    return lat;
+}
+
+function getLong(coordinates){
+    var latlon = getLanLon(coordinates);
+    //console.log("latlon:"+ latlon);
+    var lon = latlon[1];
+    //console.log("long:"+long);
+    return lon;
+}
+
+
+
 //transformamos las coordenadas UTM del servicio a GEO (WGS84) que usa HereMaps
 //TODO error: estamos teniendo un defecto de precision de unos metros al noreste
 function transformarCoordenadas(coordinates){
@@ -33,22 +69,6 @@ function transformarCoordenadas(coordinates){
     var geoCord = getGeoCoordinatesFromUtm(cX, cY, zoneZgz,hemisferio);
     //console.log(geoCord[0]+","+geoCord[1]);
     return geoCord;
-}
-
-function getLat(coordinates){
-    var latlon = transformarCoordenadas(coordinates);
-    //console.log("latlon:"+ latlon);
-    var lat = latlon[0];
-    //console.log("lat="+lat);
-    return lat;
-}
-
-function getLong(coordinates){
-    var latlon = transformarCoordenadas(coordinates);
-    //console.log("latlon:"+ latlon);
-    var long = latlon[1];
-    //console.log("long:"+long);
-    return long;
 }
 
 /*

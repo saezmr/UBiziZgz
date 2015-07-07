@@ -6,7 +6,8 @@ WorkerScript.onMessage = function(sentMessage) {
     //var zoneZgz = 30;//ZONE UTM ZARAGOZA
     var msg;
     var stationInfo;
-    var url = "http://www.zaragoza.es/api/recurso/urbanismo-infraestructuras/estacion-bicicleta/" + stationId+".json";
+	//url de la estacion en formato json, y con coordenadas wgs84
+    var url = "http://www.zaragoza.es/api/recurso/urbanismo-infraestructuras/estacion-bicicleta/" + stationId+".json?srsname=wgs84";
     //console.log("getBikes:"+url);
     xmlHttp.open("GET", url, true);
     xmlHttp.send(null);
@@ -20,14 +21,6 @@ WorkerScript.onMessage = function(sentMessage) {
             stationInfo = JSON.parse(msg);
 
             if (typeof stationInfo != "undefined") {
-
-      /*          //transformamos las coordenadas UTM del servicio a GEO (WGS84) que usa HereMaps
-                var cX = stationInfo.geometry.coordinates[0];
-                var cY = stationInfo.geometry.coordinates[0];
-                var geoCord = CoordUtil.getGeoCoordinatesFromUtm(cx, cy, zoneZgz,'N');
-                stationInfo.geometry.coordinates[0] = geoCord[0];
-                stationInfo.geometry.coordinates[1] = geoCord[1];
-*/
                 WorkerScript.sendMessage({'stationInfo': stationInfo});
             }
         }

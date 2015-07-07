@@ -4,8 +4,8 @@ WorkerScript.onMessage = function(sentMessage) {
     var msg;
     var parsedMsg;
     var stations = [];
-
-    xmlHttp.open("GET", "http://www.zaragoza.es/api/recurso/urbanismo-infraestructuras/estacion-bicicleta.json?start=0&rows=130", true);
+	//json y coordenadas wgs84
+    xmlHttp.open("GET", "http://www.zaragoza.es/api/recurso/urbanismo-infraestructuras/estacion-bicicleta.json?srsname=wgs84&start=0&rows=130", true);
 
     xmlHttp.send(null);
 

@@ -36,7 +36,7 @@ Page {
 
             spotsAvailableLabel.font.pointSize = 28;
             spotsAvailableLabel.text = "<b>" + messageObject.stationInfo.anclajesDisponibles + "</b><br>Spots";
-            var coordenadas = CoordUtil.transformarCoordenadas(messageObject.stationInfo.geometry.coordinates);
+            var coordenadas = CoordUtil.getLanLon(messageObject.stationInfo.geometry.coordinates);
             console.log("epei");
             map.zoomLevel = 16
             map.center = QtPositioning.coordinate(coordenadas[0], coordenadas[1])

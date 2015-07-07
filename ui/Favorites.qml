@@ -16,9 +16,9 @@ Page{
         ListElement { stationId:"102"; name: "Favorito dos"; description: ""; }
     }
 
-    ListView {
+    UbuntuListView  {
         id:favoritesList
-        anchors.fill: parent
+        //anchors.fill: parent
         clip: true
         model: favoritesModel
         delegate: favoriteDelegate
@@ -30,39 +30,20 @@ Page{
         }
     }
 
-    Component {
+    ListItem.Expandable{
         id: favoriteDelegate
-        Item{
-            width: favoritesList.width
-            height: 40
-            Rectangle {
-                id: background
-                x: 1; y: 1; width: parent.width - x*1; height: parent.height - y*1
-                color: grey
-                border.color: green2
-                radius: 5
-            }
-            Text {
-                id:favoriteTextList
-                text: name
-                x: 2; y: 2; width: background.width-20; height: background.height
-            }
-            ActivityIndicator {
-                id: activityIndicator
-                width:15
-                height:15
-                anchors.right: parent.right
-                y: favoriteTextList.y
-            }
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    setFavorite(stationId)
-                    pageStack.pop();//push(Qt.resolvedUrl("MainPage.qml"), {"bikesAvailableColor": "#FF0000"})
-                }
-            }
-        }
-    }
+		text: name
+        expandedHeight: units.gu(30)
+		onClicked: {
+			setFavorite(stationId)
+			pageStack.pop();//push(Qt.resolvedUrl("MainPage.qml"), {"bikesAvailableColor": "#FF0000"})
+		}
+		/*PullToRefresh indica la accion al hacer la accion de refresco (arrastrar hacia abajo). Por defecto no hace nada.
+		PullToRefresh {
+		   refreshing: uListView.model.status === XmlListModel.Loading
+		   onRefresh: uListView.model.reload()
+	    }*/
+	}
 
     Component {     //instantiated when header is processed
         id: bannercomponent
