@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=UBiziApp
+Exec=qmlscene $@ Main.qml
+Icon=logo-Bizi.png
+Terminal=false
+Type=Application
+X-Ubuntu-Touch=true
+
