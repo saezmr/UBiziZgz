@@ -40,7 +40,6 @@ Page{
                     Action {
                         iconName: "delete"
                         onTriggered:{
-                            console.log("delete index:"+docId);
                             deleteFavorite(docId);
                         }
                     }

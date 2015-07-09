@@ -22,8 +22,6 @@ Page {
     }
 
     function obtenerInfoEstacion (stationId){
-        console.log("tema "+stationId);
-        //queryStationsWorker.sendMessage({"stationId": stationId})
         stationSelector.selectedIndex = getStationIndex(stationId, stationsModel)
     }
 
@@ -38,7 +36,6 @@ Page {
             spotsAvailableLabel.font.pointSize = 28;
             spotsAvailableLabel.text = "<b>" + messageObject.stationInfo.anclajesDisponibles + "</b><br>Spots";
             var coordenadas = CoordUtil.getLanLon(messageObject.stationInfo.geometry.coordinates);
-            console.log("epei");
             map.zoomLevel = 16
             map.center = QtPositioning.coordinate(coordenadas[0], coordenadas[1])
 
@@ -64,16 +61,6 @@ Page {
 
 
     head.actions: [
-        /*Action {
-            id: reloadAction
-            iconName: "reload"
-            text: "Reload"
-
-            onTriggered: {
-                activityIndicator.running = true
-                queryBikesWorker.sendMessage({"stationId": stationsModel.get(stationSelector.selectedIndex).id})
-            }
-        },*/
         Action {
             id: addFavoriteAction
 
@@ -81,7 +68,6 @@ Page {
             text: "Add to favorites"
 
             onTriggered: {
-                console.log("add selected index:"+stationSelector.selectedIndex);
                 if (stationSelector.selectedIndex > 0){
                     var stationId = stationsModel.get(stationSelector.selectedIndex).id;
                     var name = stationsModel.get(stationSelector.selectedIndex).name;

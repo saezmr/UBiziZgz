@@ -43,10 +43,8 @@ MainView {
     }
 
     function addToFavorites(stationId, name){
-        ////console.logs("stationId:"+stationId+", name: "+name);
         if (typeof stationId !== "undefined" && noExiste(stationId)){
             biziAppDB.putDoc({"fav": {"stationId": stationId, "name": name}});
-            //console.logs("add favorite succefull")
             return true;
         } else {
             return false;
@@ -55,20 +53,10 @@ MainView {
 
     function noExiste(stationId){
         var noExiste = true;
-        //console.logs("noExiste begins, param stationId:"+stationId);
-        //for (var i = 0; i<favoritosModel.length; i++){
         var index = 0;
-        var continuar = true;
-        while (continuar){
-            //console.logs(index+"-"+favoritosModel.get(index).docId);
-            if (typeof favoritosModel.get(index).docId === "undefined"){
-                //console.logs("puta calle");
-                break;
-            }
+        while (typeof favoritosModel.get(index).docId !== "undefined"){
             var sFavorito = JSON.stringify(favoritosModel.get(index));
-            //console.logs("favorito:"+sFavorito);
             var favorito= JSON.parse(sFavorito);
-            //console.logs("favoritoParseado:"+favorito.contents.stationId);
             if (typeof favorito.contents === "undefined"){
                 continuar = false;
                 break;
