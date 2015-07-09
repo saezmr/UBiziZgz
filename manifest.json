@@ -1,8 +1,8 @@
 {
     "name": "andpr.biziapp",
-    "description": "description of UBiziApp",
+    "description": "Información de  las estaciones del servicio Bizi Zaragoza",
     "architecture": "all",
-    "title": "UBiziApp",
+    "title": "BiziApp Zaragoza",
     "hooks": {
         "UBiziApp": {
             "apparmor": "UBiziApp.apparmor",

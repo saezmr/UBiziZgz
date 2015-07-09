@@ -18,13 +18,13 @@ Component {
             }
 
             ListItem.Header {
-                text: "UBiziZgz\tv" + version
+                text: "BiziZgz\tv" + version
             }
 
             ListItem.Standard {
                 text: "Written by anDprSoft"
 
-                onClicked: Qt.openUrlExternally("https://github.com/rikidpr/UBiziZgz")
+                onClicked: Qt.openUrlExternally("https://github.com/andprsoft/UBiziZgz")
             }
 
             ListItem.Standard {
@@ -39,9 +39,9 @@ Component {
 
             ListItem.Standard {
                 text: "Source code, bugs and feature requests:<br>
-                       <a href=\"https://github.com/rikidpr/UBiziZgz\">github.com/rikidpr/UBiziZgz</a>"
+                       <a href=\"https://github.com/andprsoft/UBiziZgz\">github.com/andprsoft/UBiziZgz</a>"
 
-                onClicked: Qt.openUrlExternally("https://github.com/rikidpr/UBiziZgz")
+                onClicked: Qt.openUrlExternally("https://github.com/andprsoft/UBiziZgz")
             }
 
             ListItem.SingleControl {

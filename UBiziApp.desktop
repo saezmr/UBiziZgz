@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=UBiziApp
+Name=BiziApp
 Exec=qmlscene $@ Main.qml
 Icon=logo-Bizi.png
 Terminal=false
