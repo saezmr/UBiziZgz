@@ -6,9 +6,11 @@ import Ubuntu.Components.Popups 1.0
 Component {
     id: popoverComponent
 
+
     Popover {
         id: addFavPopover
-
+        y:100
+        height: 100
         Column {
             id: addFavColumn
             anchors {

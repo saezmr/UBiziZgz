@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=UBiziZgz
-Exec=qmlscene $@ UBiziZgz.qml
-Icon=logo-Bizi.png
-Terminal=false
-Type=Application
-X-Ubuntu-Touch=true

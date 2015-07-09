@@ -20,7 +20,7 @@ Page {
         queryStationsWorker.sendMessage({"stationId": preSelectedStationId})
     }
 
-    function lanzarTema (stationId){
+    function obtenerInfoEstacion (stationId){
         console.log("tema "+stationId);
         //queryStationsWorker.sendMessage({"stationId": stationId})
         stationSelector.selectedIndex = getStationIndex(stationId, stationsModel)
@@ -57,10 +57,14 @@ Page {
         }
     }
 
-    head.actions: [
-        Action {
-            id: reloadAction
+    AddFavoritePopover{
+        id:addFavoritePopover
+    }
 
+
+    head.actions: [
+        /*Action {
+            id: reloadAction
             iconName: "reload"
             text: "Reload"
 
@@ -68,6 +72,23 @@ Page {
                 activityIndicator.running = true
                 queryBikesWorker.sendMessage({"stationId": stationsModel.get(stationSelector.selectedIndex).id})
             }
+        },*/
+        Action {
+            id: addFavoriteAction
+
+            iconName: "add"
+            text: "Add to favorites"
+
+            onTriggered: {
+                console.log("add selected index:"+stationSelector.selectedIndex);
+                if (stationSelector.selectedIndex > 0){
+                    var stationId = stationsModel.get(stationSelector.selectedIndex).id;
+                    var name = stationsModel.get(stationSelector.selectedIndex).name;
+                    if (addToFavorites(stationId, name)) {
+                        PopupUtils.open(addFavoritePopover)
+                    }
+                }
+           }
         },
         Action {
             id: favoritesAction
@@ -246,7 +267,7 @@ Page {
             XmlListModel {
                 id: bikeStationModel
 
-                source: "http://www.zaragoza.es/api/recurso/urbanismo-infraestructuras/estacion-bicicleta.xml?start=0&rows=130"
+                source: "http://www.zaragoza.es/api/recurso/urbanismo-infraestructuras/estacion-bicicleta.xml?srsname=wgs84&start=0&rows=130"
                 query: "/resultado/result/estacion"
 
                 XmlRole { name: "id";  query: "id/string()";  isKey: true }
@@ -278,7 +299,7 @@ Page {
                             anchors.fill: parent
 
                             onClicked: {
-                                PopupUtils.open(bikeStationPopover)
+                                //PopupUtils.open(bikeStationPopover)
                                 stationSelector.selectedIndex = getStationIndex(id, stationsModel)
                             }
                         }

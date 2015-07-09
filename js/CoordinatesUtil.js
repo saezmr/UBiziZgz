@@ -42,7 +42,7 @@ function getLong(coordinates){
     var latlon = getLanLon(coordinates);
     //console.log("latlon:"+ latlon);
     var lon = latlon[1];
-    //console.log("long:"+long);
+    //console.log("long:"+lon);
     return lon;
 }
 

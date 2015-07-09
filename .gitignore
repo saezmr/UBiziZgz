@@ -25,6 +25,8 @@ ui_*.h
 Makefile*
 *-build-*
 po/
+tests/
+xml/
 
 # QtCreator
 

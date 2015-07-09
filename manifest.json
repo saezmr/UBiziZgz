@@ -1,17 +1,15 @@
 {
-    "name": "ubizizgz.rikidpr",
-    "description": "description of UBiziZgz",
+    "name": "andpr.biziapp",
+    "description": "description of UBiziApp",
     "architecture": "all",
-    "title": "UBiziZgz",
+    "title": "UBiziApp",
     "hooks": {
-        "UBiziZgz": {
-            "apparmor": "UBiziZgz.apparmor",
-            "desktop":  "UBiziZgz.desktop"
+        "UBiziApp": {
+            "apparmor": "UBiziApp.apparmor",
+            "desktop": "UBiziApp.desktop"
         }
     },
     "version": "0.1",
-    "maintainer": "rikidpr <rikerdpr@yahoo.es>",
-    "framework" : "ubuntu-sdk-15.04"
+    "maintainer": "Ricardo Sáez <saezmr@gmail.com>",
+    "framework": "ubuntu-sdk-15.04"
 }
-
-

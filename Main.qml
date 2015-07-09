@@ -37,28 +37,67 @@ MainView {
     }
 
     function setFavorite(stationId){
-        console.log("favorito seleccionado:"+stationId);
+        //console.logs("favorito seleccionado:"+stationId);
         mainPage.preSelectedStationId= stationId;
-        mainPage.lanzarTema(stationId)
+        mainPage.obtenerInfoEstacion(stationId)
     }
 
     function addToFavorites(stationId, name){
-        //console.log("stationId:"+stationId+", name: "+name);
-        if (stationId !== 'undefinded'){
+        ////console.logs("stationId:"+stationId+", name: "+name);
+        if (typeof stationId !== "undefined" && noExiste(stationId)){
             biziAppDB.putDoc({"fav": {"stationId": stationId, "name": name}});
+            //console.logs("add favorite succefull")
+            return true;
+        } else {
+            return false;
         }
-        console.log("add favorite succefull")
+    }
+
+    function noExiste(stationId){
+        var noExiste = true;
+        //console.logs("noExiste begins, param stationId:"+stationId);
+        //for (var i = 0; i<favoritosModel.length; i++){
+        var index = 0;
+        var continuar = true;
+        while (continuar){
+            //console.logs(index+"-"+favoritosModel.get(index).docId);
+            if (typeof favoritosModel.get(index).docId === "undefined"){
+                //console.logs("puta calle");
+                break;
+            }
+            var sFavorito = JSON.stringify(favoritosModel.get(index));
+            //console.logs("favorito:"+sFavorito);
+            var favorito= JSON.parse(sFavorito);
+            //console.logs("favoritoParseado:"+favorito.contents.stationId);
+            if (typeof favorito.contents === "undefined"){
+                continuar = false;
+                break;
+            } else if (favorito.contents.stationId === stationId){
+                noExiste= false;
+                break;
+            }
+            index++;
+            if (index>20){
+                break;
+            }
+        }
+        //console.logs("noExiste:"+noExiste);
+        return noExiste;
     }
 
    function deleteFavorite(docId){
        biziAppDB.deleteDoc(docId);
-       console.log(docId+" deleted")
+       //console.logs(docId+" deleted")
    }
 
     ////////////////////////
     ///  fin javascript  ///
     ////////////////////////
 
+
+   ////////////////////
+   ///   DATABASE   ///
+   ////////////////////
     //TODO Una opcion es meter todo el tema de persistencia en un FavoritoModel.qml
    // U1DB backend to record the last-picked station. Makes it faster for users to get information for their usual station.
     U1db.Database {
@@ -78,6 +117,11 @@ MainView {
        id: favoritesQuery
        index: favIdx
        //query: "*"
+   }
+
+   SortFilterModel {
+       id:favoritosModel
+       model: favoritesQuery
    }
 
 }
