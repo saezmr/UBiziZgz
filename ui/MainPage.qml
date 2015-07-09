@@ -12,7 +12,8 @@ Page {
 
     title: i18n.tr("UBiziZgz")
 
-    property color bikesAvailableColor: "#7dc242"
+    property color bikesAvailableColor: "#AA0000"
+    property color spotsAvailableColor: "#EEAAAA"
     property int preSelectedStationId:101
 
     // Always begin by loading the selected stop.
@@ -217,7 +218,7 @@ Page {
             width: parent.width / 2
             height: units.gu(13)
             radius: "medium"
-            color: "#add8e6"
+            color: spotsAvailableColor
 
             Label {
                 id: spotsAvailableLabel

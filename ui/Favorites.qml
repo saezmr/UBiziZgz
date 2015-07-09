@@ -11,28 +11,29 @@ Page{
 
     UbuntuListView  {
         id:favoritesList
-        width: units.gu(45)
-        height: units.gu(80)
+        anchors.fill:parent
         clip:true
         model: favoritesQuery
         delegate: ListItem{
-            Column{
+            height: units.gu(5)
+            Icon{
                 id:icono
-                Icon{
-                    width: units.gu(6)
-                    height: units.gu(6)
-                    name:"favorite-unselected"
-                }
-            }
-            Column{
                 anchors {
-                    left: icono.rigth+units.gu(5)
+                    left: parent.left
+                    top: parent.top
+                    bottom: parent.bottom
                 }
-                Label{
-                    //anchors.left:icono.right+units.gu(5)
-                    text: contents.name
-                    fontSize:"large"
+                width: parent.height
+                name:"favorite-unselected"
+            }
+            Label{
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                    left: icono.right
+                    right: parent.right
                 }
+                text: contents.name
+                fontSize:"medium"
             }
             leadingActions: ListItemActions {
                 actions: [

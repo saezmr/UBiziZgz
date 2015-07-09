@@ -5,21 +5,37 @@ import Ubuntu.Components.Popups 1.0
 
 Component {
     id: popoverComponent
-
-
     Popover {
-        id: addFavPopover
-        y:100
-        height: 100
-        Column {
-            id: addFavColumn
+        y: units.gu(15)
+        height: units.gu(20)
+        anchors {//lo colocamos en medio
+            left: parent.left
+            right: parent.right
+            margins: {
+                leftMargin: units.gu(5)
+                rightMargin: units.gu(5)
+            }
+            //horizontalCenter: parent.horizontalCenter
+            //verticalCenter: parent.verticalCenter
+        }
+
+        Text {
+            id:txt
             anchors {
-                left: parent.left
-                right: parent.right
+                horizontalCenter: parent.horizontalCenter
+                verticalCenter: parent.verticalCenter
             }
-            ListItem.Standard {
-                text: "Add favorite succesful"
+            text: "Add favorite succesful"
+        }
+        Icon{
+            id:icono
+            width: units.gu(3)
+            height: units.gu(3)
+            anchors {
+                left: txt.right
+                verticalCenter: parent.verticalCenter
             }
+            name:"favorite-selected"
         }
     }
 }
